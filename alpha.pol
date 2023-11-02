@@ -1,1 +1,45 @@
+{
+  "schemaVersion": "1.1",
+  "types": {
+    "user": {
+      "relations": {
+        "member": {
+          "type": "user"
+        }
+      }
+    },
+    "domain": {
+      "relations": {
+        "member": {
+          "type": "user"
+        }
+      }
+    },
+    "folder": {
+      "relations": {
+        "can_share": "writer",
+        "owner": {
+          "type": ["user", "domain#member"]
+        },
+        "parent_folder": {
+          "type": "folder"
+        },
+        "viewer": {
+          "type": ["user", "domain#member"],
+          "or": [
+            "writer",
+            "viewer from parent_folder"
+          ]
+        },
+        "writer": {
+          "type": ["user", "domain#member"],
+          "or": [
+            "owner",
+            "writer from parent_folder"
+          ]
+        }
+      }
+    }
+  }
+}
 
